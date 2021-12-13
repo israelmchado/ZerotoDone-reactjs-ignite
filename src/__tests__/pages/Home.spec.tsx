@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { GetStaticPropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
@@ -115,15 +116,15 @@ describe('Home', () => {
       getStaticPropsContext
     )) as GetStaticPropsResult;
 
-    expect(response.props.postsPagination.next_page).toEqual(
-      postsPaginationReturn.next_page
-    );
-    expect(response.props.postsPagination.results).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining(postsPaginationReturn.results[0]),
-        expect.objectContaining(postsPaginationReturn.results[1]),
-      ])
-    );
+    expect(response.props.postsPagination).toEqual(postsPaginationReturn);
+  });
+
+  it('should be able to render logo', () => {
+    const postsPagination = mockedQueryReturn;
+
+    render(<App postsPagination={postsPagination} />);
+
+    screen.getByAltText('logo');
   });
 
   it('should be able to render posts documents info', () => {
